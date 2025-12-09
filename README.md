@@ -1,5 +1,9 @@
 # 📖 소요리문답 암기왕 (Catechism Master)
 
+<p align="center">
+  <img src="assets/logo.jpg" alt="Sophorsyne AI Lab" width="120">
+</p>
+
 교회 주일학교 학생(초등~중고등)을 위한 웨스트민스터 소요리문답 학습 웹앱
 
 ## 🎯 주요 기능
@@ -35,13 +39,16 @@ python -m http.server 8080
 
 ```
 catechism-master/
-├── index.html       # 메인 페이지
-├── css/style.css    # 말해보카 스타일 다크 테마
+├── index.html
+├── css/style.css
 ├── js/
-│   ├── data.js      # 소요리문답 107문 데이터
-│   ├── storage.js   # LocalStorage 관리
-│   └── app.js       # 앱 로직
-└── README.md
+│   ├── data.js
+│   ├── storage.js
+│   └── app.js
+├── assets/
+│   └── logo.jpg
+├── README.md
+└── LICENSE
 ```
 
 ## ✨ 특징
@@ -53,4 +60,6 @@ catechism-master/
 
 ---
 
-*© 2024 소요리문답 암기왕*
+<p align="center">
+  <strong>© 2025 Sophorsyne AI Lab</strong>
+</p>
