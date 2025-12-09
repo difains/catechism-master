@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소요리문답 암기왕</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <h1>📖 소요리문답 암기왕</h1>
+            <div class="header-controls">
+                <select id="modeSelect" class="mode-select">
+                    <option value="elementary">🧒 초등부</option>
+                    <option value="youth">📚 중고등부</option>
+                </select>
+                <button id="themeToggle" class="theme-btn">🌙</button>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-bar">
+            <button class="nav-btn active" data-page="home">🏠 홈</button>
+            <button class="nav-btn" data-page="flashcard">🃏 플래시카드</button>
+            <button class="nav-btn" data-page="quiz">✍️ 빈칸채우기</button>
+            <button class="nav-btn" data-page="matching">🔗 매칭게임</button>
+            <button class="nav-btn" data-page="stats">📊 통계</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Page -->
+            <section id="homePage" class="page active">
+                <div class="welcome-card">
+                    <h2>👋 환영합니다!</h2>
+                    <p>웨스트민스터 소요리문답을 재미있게 학습해보세요</p>
+                </div>
+                <div class="stats-overview">
+                    <div class="stat-card">
+                        <span class="stat-icon">📚</span>
+                        <span class="stat-value" id="totalQuestions">107</span>
+                        <span class="stat-label">전체 문답</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">✅</span>
+                        <span class="stat-value" id="learnedCount">0</span>
+                        <span class="stat-label">학습 완료</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">⭐</span>
+                        <span class="stat-value" id="masteredCount">0</span>
+                        <span class="stat-label">완전 암기</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">🔥</span>
+                        <span class="stat-value" id="streakCount">0</span>
+                        <span class="stat-label">연속 정답</span>
+                    </div>
+                </div>
+                <div class="quick-actions">
+                    <button class="action-btn primary" onclick="app.startQuickLearn()">⚡ 빠른 학습</button>
+                    <button class="action-btn" onclick="app.startReview()">🔄 복습하기</button>
+                    <button class="action-btn" onclick="app.showWrongAnswers()">❌ 오답노트</button>
+                </div>
+            </section>
+
+            <!-- Flashcard Page -->
+            <section id="flashcardPage" class="page">
+                <div class="flashcard-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="flashcardProgress"></div>
+                    </div>
+                    <div class="flashcard" id="flashcard" onclick="app.flipCard()">
+                        <div class="card-front">
+                            <span class="card-number">문 1</span>
+                            <p class="card-question"></p>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-answer"></p>
+                            <p class="card-verse"></p>
+                        </div>
+                    </div>
+                    <div class="card-controls">
+                        <button class="control-btn" onclick="app.prevCard()">⬅️ 이전</button>
+                        <button class="control-btn star-btn" onclick="app.toggleStar()">⭐</button>
+                        <button class="control-btn" onclick="app.nextCard()">다음 ➡️</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz Page -->
+            <section id="quizPage" class="page">
+                <div class="quiz-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="quizProgress"></div>
+                    </div>
+                    <div class="quiz-card">
+                        <span class="quiz-number">문 1</span>
+                        <p class="quiz-question" id="quizQuestion"></p>
+                        <p class="quiz-answer-template" id="quizTemplate"></p>
+                        <div class="quiz-input-area">
+                            <input type="text" id="quizInput" class="quiz-input" placeholder="빈칸에 들어갈 단어를 입력하세요">
+                            <button class="submit-btn" onclick="app.checkAnswer()">확인</button>
+                        </div>
+                        <div class="quiz-feedback" id="quizFeedback"></div>
+                    </div>
+                    <div class="quiz-controls">
+                        <button class="hint-btn" onclick="app.showHint()">💡 힌트</button>
+                        <button class="skip-btn" onclick="app.skipQuestion()">⏭️ 건너뛰기</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Matching Page -->
+            <section id="matchingPage" class="page">
+                <div class="matching-container">
+                    <div class="matching-header">
+                        <span class="timer" id="matchTimer">⏱️ 00:00</span>
+                        <span class="match-score" id="matchScore">매칭: 0/5</span>
+                    </div>
+                    <div class="matching-grid" id="matchingGrid"></div>
+                    <button class="restart-btn" onclick="app.restartMatching()">🔄 다시 시작</button>
+                </div>
+            </section>
+
+            <!-- Stats Page -->
+            <section id="statsPage" class="page">
+                <div class="stats-container">
+                    <h2>📊 학습 통계</h2>
+                    <div class="stats-detail">
+                        <div class="stat-row">
+                            <span>총 학습 횟수</span>
+                            <span id="totalAttempts">0회</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>정답률</span>
+                            <span id="accuracy">0%</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>최고 연속 정답</span>
+                            <span id="bestStreak">0</span>
+                        </div>
+                    </div>
+                    <button class="reset-btn" onclick="app.resetProgress()">🗑️ 진도 초기화</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
